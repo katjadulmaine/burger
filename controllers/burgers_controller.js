@@ -21,19 +21,21 @@ router.get("/", function (req, res) {
 });
 
 //PROBLEM AREA THANKS MAX
-router.post("/", function (req, res) {
+router.post("/api/burger", function (req, res) { //usually we would do a post route to something like /api/burgers
   burger.insertOne(['burger_name'], [req.body.burger_name], function (data) {
-   console.log("insert = " + { id: result.insertId })
-    res.json({ id: result.insertId });
-  });
+   console.log("insert = " + { id: data.insertId }) //data not results
+    res.json({ id: data.insertId }); // data not result is what you are passing
+
+  }); 
 });
 
-router.put("/:id", function (req, res) {
-  var id = "id = " + req.params.id;
-  console.log("id = " + id)
-
-  burger.updateOne({devoured: true} ,id, function (data) {
-    if (result.changedRows == 0) {
+router.put("/api/burger/:id", function (req, res) {//usually we would do a post route to something like /api/burgers/:id
+  var condition =  req.params.id; //setup what condition to change
+  var changes = "devoured=true"
+  var table = "burgers"
+  console.log(1)
+  burger.updateOne(table,changes ,condition, function (data) { // condition not id
+    if (data.changedRows === 0) { //data not results
       // If no rows were changed, then the ID must not exist, so 404
       return res.status(404).end();
     } else {

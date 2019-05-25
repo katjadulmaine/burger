@@ -1,57 +1,87 @@
 <h1>Name Your Burger!</h1>
 <br>
 <div class="container">
- <div class="row">
-<div class="col-6">  
-<div id="named">
-    <h3>Already Named Burgers
+    <div class="row">
+        <div class="col-6">
+            <div id="named">
+                <h3>Already Named Burgers
+            </div>
+            <ul>
+                {{!-- WHAT ABOUT this. --}}
+                {{#each burgers}}
+                {{#unless devoured}}<!--devoured not devour-->
+                <p>
+
+                    {{burger_name}} <button class="devour" id={{id}}>devour</button>
+
+
+                </p>
+                {{/unless}}
+                {{/each}}
+                {{!-- This really should be handled by JS
+            <form method="POST" action="/api/burger" class="form">--}}
+                <label id="label">Make Your Burger!</label>
+                <input type="text" name="newB" id="textNew">
+                {{!-- <button id="subBtn">Make Me!</button> --}}
+                <input type="submit" id="subBtn" value="Make Me!">
+                {{!-- </form> --}}
+
+            </ul>
+        </div>
+        <div class="col-6">
+            <div id="devour">
+                <h3>Devoured Burgers!<br>May They Rest In Peace</h3>
+                <ul>
+                    {{#each burgers}}
+                    {{#if devoured}} <!--devoured not devour-->
+                    <p>
+                        {{id}}.{{burger_name}}
+                    </p>
+                    {{/if}}
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
+        <div class="row button">
+            <div class="col">
+                <p>
+                    {{name}}
+
+                    {{!-- not needed since we can just add a button to the actual burger name
+                     <form method="POST" action="/api/burger" class="devForm">
+                        <label id="label">MOVE to Devoured!</label>
+                        <input type="text" name="devoured" id="devText" placeholder="Enter Burger Number Here">
+                        <input type="submit" class="devBtn" value="DEVOUR">
+                    </form> --}}
+                    <button class="devour" data-id="{{this.id}} "></button>
+
+                    <button class="delete" data-id="{{this.id}}">Delete This Burger!</button>
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
-<ul> 
-    {{!-- WHAT ABOUT this. --}}
-    {{#each burgers}}{{#unless devour}}
-    <p>
-       
-        {{id}}. {{burger_name}}
-        
-      
-    </p>
-    {{/unless}}{{/each}}
-   
-            <form method="POST" action="/" class="form">
-            <label id="label">Make Your Burger!</label>
-            <input type="text" name="newB" id="textNew">
-            <input type="submit" id="subBtn" value="Make Me!">
-            </form>
-   
-</ul>
-</div>
-<div class="col-6">   
-<div id="devour">
-    <h3>Devoured Burgers!<br>May They Rest In Peace</h3>
-    <ul>
-        {{#each burgers}}{{#if devour}}
-        <p>
-        {{id}}.{{burger_name}}
-        </p>
-        {{/if}} {{/each}}
-    </ul>
-</div>
-</div>
-<div class="row button">
-    <div class="col">
-    <p>
-        {{name}}
-            
-         <form method="POST" action="/"  class="devForm">
-            <label id="label">MOVE to Devoured!</label>
-            <input type="text" name="devoured" id="devText" placeholder="Enter Burger Number Here">
-            <input type="submit"  class="devBtn" value="DEVOUR">
-            </form>
-        <button class="devour"data-id="{{this.id}} "></button>
-        
-        <button class="delete" data-id="{{this.id}}">Delete This Burger!</button>
-    </p>
-</div>
-</div>
-</div>
-</div>
+<script>
+    $("#subBtn").on("click", function () {
+        console.log("test")
+        $.ajax({
+            type: "POST",
+            url: "api/burger",
+            data: { burger_name: $("#textNew").val() },
+            traditional: true
+        }).then(
+            location.reload()
+        );
+    })
+    $(".devour").on("click", function () {
+        console.log(this.id)
+        $.ajax({
+            type: "Put",
+            url: "api/burger/" + this.id,
+        }).then(
+            location.reload()
+        );
+    })
+
+
+</script>

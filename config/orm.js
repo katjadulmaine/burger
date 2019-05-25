@@ -14,8 +14,10 @@ var orm = {
 // do I need the condition of the button pushing SHOULD BE CONDITION not value
   //table in mysql, the inputed new name, and devour it value  false
   insertOne: function (table, colName, colValue, cb) {
-    var queryString = "INSERT INTO ?? (??) VALUES (?)" //INSERT INTO burgers (burger name) VALUES (false/default until button pushed)
-    connection.query(queryString, [table, colName, colValue], function (err, res) {
+    // var queryString = "INSERT INTO ?? (??) VALUES (?)" //INSERT INTO burgers (burger name) VALUES (false/default until button pushed)
+     var queryString = "INSERT INTO " + table + " ("+colName.toString()+") VALUES (?)" //INSERT INTO burgers (burger name) VALUES (false/default until button pushed)
+
+    connection.query(queryString, colValue, function (err, res) {
       if (err) {
         throw err;
       }
@@ -26,14 +28,17 @@ var orm = {
   },
       // table, colvalue? boolean and id to update devour is true
   updateOne: function (table, colValue, id, cb) {
-      var queryString = "UPDATE ??"  //UPDATE burgers SET devoured = true WHERE id = ?
-      queryString += "SET ?? = ?"
-      queryString += "WHERE ?? = ?"
-      connection.query(queryString, [table, id, colValue], function (err, res) {
+    console.log(1)
+
+      var queryString = "UPDATE "+table;  //UPDATE burgers SET devoured = true WHERE id = ?
+      queryString += " SET  " + colValue
+      queryString += " WHERE id = "+id
+      console.log(queryString)
+      connection.query(queryString, function (err, res) {
         if (err) {
           throw err;
         }
-        console.log(res);
+        console.log("got here")
         cb(res);    
     });
   },
