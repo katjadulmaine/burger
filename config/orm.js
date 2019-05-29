@@ -46,7 +46,7 @@ var orm = {
   deleteOne: function (table, id, cb) {
     var queryString = "DELETE FROM " + table; //DELETE FROM burgers WHERE id =?
     queryString += " WHERE  ?? = ?"
-    connection.query(queryString, [id,], function (err, result) {
+    connection.query(queryString, [id,], function (err, res) {
       if (err) {
         throw err;
       }

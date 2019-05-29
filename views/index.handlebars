@@ -1,18 +1,24 @@
-<h1>Name Your Burger!</h1>
-<br>
 <div class="container">
     <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8"> 
+            <h1 class=" text-center">Burger!</h1>
+        </div> 
+    </div>
+    <div class="row myfade">
         <div class="col-6">
             <div id="named">
-                <h3>Already Named Burgers
+                <h3>Already Named Burgers</h3>
+                <br>
             </div>
             <ul>
                 {{!-- WHAT ABOUT this. --}}
                 {{#each burgers}}
-                {{#unless devoured}}<!--devoured not devour-->
+                {{#unless devoured}}
+                <!--devoured not devour-->
                 <p>
 
-                    {{burger_name}} <button class="devour" id={{id}}>devour</button>
+                    {{burger_name}} <button class="devour" id={{id}}>Devour</button>
 
 
                 </p>
@@ -31,34 +37,26 @@
         <div class="col-6">
             <div id="devour">
                 <h3>Devoured Burgers!<br>May They Rest In Peace</h3>
+                <br>
                 <ul>
                     {{#each burgers}}
-                    {{#if devoured}} <!--devoured not devour-->
+                    {{#if devoured}}
+                    <!--devoured not devour-->
                     <p>
-                        {{id}}.{{burger_name}}
+                        {{id}}.{{burger_name}}<button class="delete" id={{id}}>Delete</button>
                     </p>
                     {{/if}}
                     {{/each}}
                 </ul>
             </div>
         </div>
-        <div class="row button">
-            <div class="col">
-                <p>
-                    {{name}}
+           
+               
+                    
 
-                    {{!-- not needed since we can just add a button to the actual burger name
-                     <form method="POST" action="/api/burger" class="devForm">
-                        <label id="label">MOVE to Devoured!</label>
-                        <input type="text" name="devoured" id="devText" placeholder="Enter Burger Number Here">
-                        <input type="submit" class="devBtn" value="DEVOUR">
-                    </form> --}}
-                    <button class="devour" data-id="{{this.id}} "></button>
-
-                    <button class="delete" data-id="{{this.id}}">Delete This Burger!</button>
-                </p>
-            </div>
-        </div>
+             
+           
+     </div>
     </div>
 </div>
 <script>
@@ -83,5 +81,14 @@
         );
     })
 
-
+    $(".delete").on("click", function(event) {
+        event.preventDefault();
+        console.log("test",this.id)
+        $.ajax({
+            type: "Delete",
+            url: "api/burger/" + this.id,
+        }).then (
+            location.reload()
+        );
+    })
 </script>

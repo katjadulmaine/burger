@@ -2,7 +2,6 @@
 var orm = require("../config/orm.js");
 
 var burger = {
-    //DO I NEED TO LIST TABLE
     selectAll: function (cb) {
         orm.selectAll("burgers", function(res) {
             cb(res);
@@ -15,13 +14,13 @@ var burger = {
             // insert new burger
         });
     },
-    updateOne: function (table, colvalue, id, cb) {
+    updateOne: function (table,colvalue, id, cb) {
         orm.updateOne("burgers", colvalue, id, function (res) {
             cb(res);
             // to move to DEVOUR IT column  
         });
     },
-    deleteOne: function (table, id, condition, cb) {
+    deleteOne: function (table,id, condition, cb) {
         orm.deleteOne("burgers", id, condition, function (res) {
             cb(res);
             // to remove a burger from list
