@@ -8,11 +8,11 @@ html {
      margin:0%;
     font-family: 'Times New Roman', Times, serif;
     width: 100%!important;
-    height: 100%!important;
+    height: 95vh!important;
     background-image: url('../img/cheeseburger.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    display: inline-flexbox!important;
+   
   
 }
 
